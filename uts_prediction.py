@@ -179,6 +179,36 @@ results = pd.DataFrame({
     'Score': [acc_mlr_model, acc_sgd_model, acc_log_model, 
               acc_knn_model, acc_svm_model, acc_rbf_model, acc_des_model,
               acc_rfr_model]})
-result_df = results.sort_values(by='Score', ascending=False)
-result_df = result_df.set_index('Score')
-result_df
+result_models = results.sort_values(by='Score', ascending=False)
+result_models = result_models.set_index('Score')
+print(result_models)
+
+# Evaluating the Decision tree
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.model_selection import cross_val_score
+def build_classifier():
+    regressor_des = DecisionTreeRegressor(random_state = 0)
+    regressor_des.fit(X_train, y_train)
+    return classifier
+regressor_des = DecisionTreeRegressor(random_state = 0)
+accuracies = cross_val_score(estimator = regressor_des, X = X_train, y = y_train, cv = 10)
+mean = accuracies.mean()
+variance = accuracies.std()
+print(mean)
+print("\n")
+print(variance)
+
+# Evaluating the Random Forest
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import cross_val_score
+def build_classifier():
+    regressor_rfr=RandomForestClassifier(n_estimators=100)
+    regressor_rfr.fit(X_train,y_train)
+    return regressor_rfr
+regressor_rfr = RandomForestClassifier(n_estimators=100)
+accuracies = cross_val_score(estimator = regressor_rfr, X = X_train, y = y_train, cv = 2)
+mean = accuracies.mean()
+variance = accuracies.std()
+print(mean)
+print("\n")
+print(variance)
